@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
+import java.io.IOException;
 import java.io.InputStream;
 
 import javax.imageio.ImageIO;
@@ -30,45 +31,47 @@ public class Player extends Entity{
         direction = "Idle";
     }
 
-    public void getPlayerImage(){
+    public void getPlayerImage() {
         try {
-            Idle = ImageIO.read(getClass().getResourceAsStream("/resources_Idle.png"));
-
-        }
-
-        catch (Exception e) {
+            Idle = ImageIO.read(getClass().getResourceAsStream("/player/Idle.png"));
+        } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
-
-    public void update(){
-        if(keyH.leftPressed == true){
+    public void update () {
+        if (keyH.leftPressed) {
             direction = "Idle";
             x -= speed;
         }
-        if(keyH.rightPressed == true){
+        if (keyH.rightPressed) {
             direction = "Idle";
             x += speed;
 
         }
 
-        if(keyH.shiftPressed == true){
+        if (keyH.shiftPressed) {
             direction = "Idle";
             speed = 5;
         }
 
+        if (keyH.shiftPressed == false) {
+            speed = 2;
+        }
     }
 
-    public void draw(Graphics2D g2){
+        public void draw (Graphics2D g2){
 
-        g2.setColor(Color.WHITE);
-        g2.fillRect(x, y, gp.tileSize, gp.tileSize);
+//            g2.setColor(Color.WHITE);
+//            g2.fillRect(x, y, gp.tileSize, gp.tileSize);
+            BufferedImage image = null;
+            switch(direction){
+                case "Idle":
+                    image = Idle;
+                    break;
 
+            }
+            g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
 
-
+        }
     }
-
-}
 
