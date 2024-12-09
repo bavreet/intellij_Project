@@ -24,6 +24,7 @@ public class tileManager {
 
             tile[0] = new Tile();
             tile[0].image = ImageIO.read(getClass().getResourceAsStream("/Background/grass.png"));
+//            tile[1].collision = true;
             tile[1] = new Tile();
             tile[1].image = ImageIO.read(getClass().getResourceAsStream("/Background/dirt.png"));
 
@@ -39,10 +40,8 @@ public class tileManager {
     g2.drawImage(tile[0].image, 110, 370, gp.tileSize, gp.tileSize, null);
     g2.drawImage(tile[0].image, 230, 370, gp.tileSize, gp.tileSize, null);
     g2.drawImage(tile[0].image, 350, 370, gp.tileSize, gp.tileSize, null);
-    g2.drawImage(tile[1].image, 470, 370, gp.tileSize, gp.tileSize, null);
-    g2.drawImage(tile[1].image, 590, 370, gp.tileSize, gp.tileSize, null);
-    g2.drawImage(tile[0].image, 470, 265, gp.tileSize, gp.tileSize, null);
-    g2.drawImage(tile[0].image, 590, 265, gp.tileSize, gp.tileSize, null);
+    g2.drawImage(tile[0].image, 470, 370, gp.tileSize, gp.tileSize, null);
+    g2.drawImage(tile[0].image, 590, 370, gp.tileSize, gp.tileSize, null);
     g2.drawImage(tile[0].image, 710, 370, gp.tileSize, gp.tileSize, null);
     g2.drawImage(tile[0].image, 830, 370, gp.tileSize, gp.tileSize, null);
     g2.drawImage(tile[0].image, 950, 370, gp.tileSize, gp.tileSize, null);

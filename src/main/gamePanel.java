@@ -11,14 +11,14 @@ import tile.tileManager;
 
 public class gamePanel extends JPanel implements Runnable{
     //screen settings
-    final int originalTitleSize = 40; // 16/16 tile
+    final int originalTitleSize = 40; //  tile
     final int backgroundTileSize = 80;
-    final int scale = 3; // charcater would be 16/16 but would look like a 48/48 because its scaled
+    final int scale = 3; //
 
     public final int tileSize = originalTitleSize * scale; // scales
     public final int BackgroundTileSIze = backgroundTileSize *scale;
-    final int maxScreenCol = 8; // 16 tiles horizontally
-    final int maxScreenRow = 4; // 12 tiles vertically
+    final int maxScreenCol = 8; // 8 tiles horizontally
+    final int maxScreenRow = 4; // 4 tiles vertically
     final int screenWitdh = tileSize * maxScreenCol; // 48*16 = 768 pixels
     final int screenHeight = tileSize * maxScreenRow; // 48*12 = 576 pixels
     //FPS
@@ -26,6 +26,7 @@ public class gamePanel extends JPanel implements Runnable{
 
     tileManager tileM = new tileManager(this);
     keyHandler keyH =  new keyHandler();
+    public collisionChecker cChecker = new collisionChecker(this);
     Thread gameThread;
     Player player = new Player(this,keyH);
 
