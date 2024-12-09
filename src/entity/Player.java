@@ -163,29 +163,49 @@ public class Player extends Entity{
             }
             spriteCounter = 0;
         }
-        attackCounter++;
-        if(attackCounter >12) {
-            if (attackNum == 1) {
-                attackNum = 2;
-            }else if (attackNum == 2) {
-                System.out.println("attackNum 2");
-                attackNum ++;
-            } else if (attackNum == 3) {
-                System.out.println("SpiritNum 3");
-                attackNum = 4;
-            } else if (attackNum == 4) {
-                attackNum = 5;
-            } else if (attackNum == 5) {
-                attackNum = 6;
-            } else if (attackNum == 6) {
-                attackNum = 7;
-            } else if (attackNum == 7) {
-                attackNum = 8;
-            } else if (attackNum == 8) {
-                direction = "Idle";
+//        attackCounter++;
+//        if(attackCounter >12) {
+//            if (attackNum == 1) {
+//                attackNum = 2;
+//            }
+//            if (attackNum == 2) {
+//                System.out.println("attackNum 2");
+//                attackNum = 3;
+//            }
+//            if (attackNum == 3) {
+//                System.out.println("attackNum 3");
+//                attackNum = 4;
+//            }
+//            if (attackNum == 4) {
+//                attackNum = 5;
+//            }
+//            if (attackNum == 5) {
+//                attackNum = 6;
+//            }
+//            if (attackNum == 6) {
+//                attackNum = 7;
+//            }
+//            if (attackNum == 7) {
+//                attackNum = 8;
+//            }
+//            if (attackNum == 8) {
+//                direction = "Idle";
+//            }
+//            attackCounter = 0;
+            if(keyH.rPressed){
+                attackCounter++;
+
+                if (attackCounter > 12) {
+                    for (int i = 1; i <= 8; i++) {
+                        attackNum = i;
+                        attackCounter ++;
+                        System.out.println("attackNum: " + attackNum + "attackCounter: " + attackCounter);
+                    }
+                    direction = "Idle";
+                    attackCounter = 0;
+
+                }
             }
-            attackCounter = 0;
-        }
     }
 
     public void draw (Graphics2D g2){
@@ -221,23 +241,30 @@ public class Player extends Entity{
                 }
                 break;
             case "Attack":
+
                 System.out.println("Attack frame: " + attackNum);
                 if (attackNum == 1) {
                     System.out.println("Attack triggered");
                     image = attack1;
-                } else if (attackNum == 2) {
+                }
+                if (attackNum == 2) {
                     image = attack2;
-                } else if (attackNum == 3) {
+                }
+                if (attackNum == 3) {
                     image = attack3;
-                } else if (attackNum == 4) {
+                }  if (attackNum == 4) {
                     image = attack4;
-                } else if (attackNum == 5) {
+                }
+                if (attackNum == 5) {
                     image = attack5;
-                } else if (attackNum == 6) {
+                }
+                if (attackNum == 6) {
                     image = attack6;
-                } else if (attackNum == 7) {
+                }
+                if (attackNum == 7) {
                     image = attack7;
-                } else if (attackNum == 8) {
+                }
+                if (attackNum == 8) {
                     image = attack8;
                 }
                 break;

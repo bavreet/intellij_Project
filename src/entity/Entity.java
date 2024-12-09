@@ -18,7 +18,7 @@ public class Entity {
     boolean isFalling = false;
     boolean isGrounded = true;
     public int attackCounter = 0;
-    public int attackNum =1;
+    public int attackNum = 1;
     public boolean isAttacking = false;
     public int jumpCounter = 0;
 
