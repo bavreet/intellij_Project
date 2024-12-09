@@ -31,7 +31,7 @@ public class Player extends Entity{
         x = 270;
         y = 270;
         speed = 2;
-        direction = "Idle";
+        direction = "run1";
         isAttacking = false;
         attackCounter = 0;
     }
