@@ -7,13 +7,16 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import entity.Player;
+import tile.tileManager;
 
 public class gamePanel extends JPanel implements Runnable{
     //screen settings
     final int originalTitleSize = 40; // 16/16 tile
+    final int backgroundTileSize = 80;
     final int scale = 3; // charcater would be 16/16 but would look like a 48/48 because its scaled
 
     public final int tileSize = originalTitleSize * scale; // scales
+    public final int BackgroundTileSIze = backgroundTileSize *scale;
     final int maxScreenCol = 8; // 16 tiles horizontally
     final int maxScreenRow = 4; // 12 tiles vertically
     final int screenWitdh = tileSize * maxScreenCol; // 48*16 = 768 pixels
@@ -21,6 +24,7 @@ public class gamePanel extends JPanel implements Runnable{
     //FPS
     int FPS = 60;
 
+    tileManager tileM = new tileManager(this);
     keyHandler keyH =  new keyHandler();
     Thread gameThread;
     Player player = new Player(this,keyH);
@@ -93,7 +97,7 @@ public class gamePanel extends JPanel implements Runnable{
         super.paintComponent(g); //super means parent class of this class
 
         Graphics2D g2 = (Graphics2D)g; // Graphics2D extends the Graphics class to provide more functions.
-
+        tileM.draw(g2);
         player.draw(g2);
 
         g2.dispose(); // Release resources to avoid memory leaks or unnecessary resource usage.
