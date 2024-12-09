@@ -167,9 +167,11 @@ public class Player extends Entity{
         if(attackCounter >12) {
             if (attackNum == 1) {
                 attackNum = 2;
-            } else if (attackNum == 2) {
-                attackNum = 3;
+            }else if (attackNum == 2) {
+                System.out.println("attackNum 2");
+                attackNum ++;
             } else if (attackNum == 3) {
+                System.out.println("SpiritNum 3");
                 attackNum = 4;
             } else if (attackNum == 4) {
                 attackNum = 5;
