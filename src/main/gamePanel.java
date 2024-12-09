@@ -10,12 +10,12 @@ import entity.Player;
 
 public class gamePanel extends JPanel implements Runnable{
     //screen settings
-    final int originalTitleSize = 16; // 16/16 tile
+    final int originalTitleSize = 40; // 16/16 tile
     final int scale = 3; // charcater would be 16/16 but would look like a 48/48 because its scaled
 
     public final int tileSize = originalTitleSize * scale; // scales
-    final int maxScreenCol = 16; // 16 tiles horizontally
-    final int maxScreenRow = 12; // 12 tiles vertically
+    final int maxScreenCol = 8; // 16 tiles horizontally
+    final int maxScreenRow = 4; // 12 tiles vertically
     final int screenWitdh = tileSize * maxScreenCol; // 48*16 = 768 pixels
     final int screenHeight = tileSize * maxScreenRow; // 48*12 = 576 pixels
     //FPS
@@ -25,10 +25,6 @@ public class gamePanel extends JPanel implements Runnable{
     Thread gameThread;
     Player player = new Player(this,keyH);
 
-    //set player default position
-    int playerX = 100;
-    int playerY = 100;
-    int playerSpeed = 2;
 
 
 

@@ -33,7 +33,6 @@ public class keyHandler  implements KeyListener{
         if(code == KeyEvent.VK_SHIFT){
             shiftPressed = true;
         }
-
     }
 
     @Override

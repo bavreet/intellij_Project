@@ -34,28 +34,61 @@ public class Player extends Entity{
     public void getPlayerImage() {
         try {
             Idle = ImageIO.read(getClass().getResourceAsStream("/player/Idle.png"));
+            run1 = ImageIO.read(getClass().getResourceAsStream("/player/run1.png"));
+            run2 = ImageIO.read(getClass().getResourceAsStream("/player/run2.png"));
+            run3 = ImageIO.read(getClass().getResourceAsStream("/player/run3.png"));
+            run4 = ImageIO.read(getClass().getResourceAsStream("/player/run4.png"));
+            run5 = ImageIO.read(getClass().getResourceAsStream("/player/run5.png"));
+            run6 = ImageIO.read(getClass().getResourceAsStream("/player/run6.png"));
+            run7 = ImageIO.read(getClass().getResourceAsStream("/player/run7.png"));
+            run8 = ImageIO.read(getClass().getResourceAsStream("/player/run8.png"));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     public void update () {
         if (keyH.leftPressed) {
-            direction = "Idle";
+            direction = "run1";
             x -= speed;
         }
         if (keyH.rightPressed) {
-            direction = "Idle";
+            direction = "run1";
             x += speed;
 
         }
-
         if (keyH.shiftPressed) {
-            direction = "Idle";
-            speed = 5;
+            direction = "run1";
+            speed = 4;
         }
 
         if (keyH.shiftPressed == false) {
             speed = 2;
+        }
+        if(keyH.rightPressed == false && keyH.leftPressed == false){
+            direction = "Idle";
+        }
+
+        spriteCounter++;
+        if(spriteCounter >12) {
+            if (spriteNum == 1) {
+                spriteNum = 2;
+            } else if (spriteNum == 2) {
+                spriteNum = 3;
+            } else if (spriteNum == 3) {
+                spriteNum = 4;
+            } else if (spriteNum == 4) {
+                spriteNum = 5;
+            } else if (spriteNum == 5) {
+                spriteNum = 6;
+            }else if (spriteNum == 6) {
+                spriteNum = 7;
+            }else if (spriteNum == 7) {
+                spriteNum = 8;
+            }else if (spriteNum == 8) {
+                spriteNum = 1;
+            }
+            spriteCounter = 0;
         }
     }
 
@@ -65,9 +98,35 @@ public class Player extends Entity{
 //            g2.fillRect(x, y, gp.tileSize, gp.tileSize);
             BufferedImage image = null;
             switch(direction){
+                case "run1":
+                    if(spriteNum == 1){
+                        image = run1;
+                    }
+                    if(spriteNum == 2){
+                        image = run2 ;
+                    }
+                    if(spriteNum == 3){
+                        image = run3;
+                    }
+                    if(spriteNum == 4){
+                        image = run4;
+                    }
+                    if(spriteNum == 5){
+                        image = run5;
+                    }
+                    if(spriteNum == 6) {
+                        image = run6;
+                    }
+                    if(spriteNum == 7){
+                        image = run8;
+                    }
+                    if(spriteNum == 8){
+                        image = run8;
+                    }
+                    break;
+
                 case "Idle":
                     image = Idle;
-                    break;
 
             }
             g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
