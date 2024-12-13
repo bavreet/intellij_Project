@@ -3,43 +3,43 @@ package entity;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 
 import main.gamePanel;
 import main.keyHandler;
 
-public class Player extends Entity{
-    public long jumpingTime = 200;
+public class Player extends Entity {
     gamePanel gp;
     keyHandler keyH;
+    public long jumpingTime = 200;
 
-    public Player(gamePanel gp, keyHandler keyH){
+    public Player(gamePanel gp, keyHandler keyH) {
         this.gp = gp;
         this.keyH = keyH;
 
         solidArea = new Rectangle();
         solidArea.x = 8;
         solidArea.y = 32;
-        solidArea.width = 15- gp.tileSize;
+        solidArea.width = 15 - gp.tileSize;
         solidArea.height = 20 - gp.tileSize;
         setDefaultValues();
         getPlayerImage();
     }
 
-    public void setDefaultValues(){
+    public void setDefaultValues() {
         x = 270;
         y = 270;
         speed = 2;
         direction = "run1";
         isAttacking = false;
         attackCounter = 0;
+        attackNum = 1;
+        isJumping = false;
     }
 
     public void getPlayerImage() {
         try {
             Idle = ImageIO.read(getClass().getResourceAsStream("/player/Idle.png"));
-
             run1 = ImageIO.read(getClass().getResourceAsStream("/player/run1.png"));
             run2 = ImageIO.read(getClass().getResourceAsStream("/player/run2.png"));
             run3 = ImageIO.read(getClass().getResourceAsStream("/player/run3.png"));
@@ -57,13 +57,6 @@ public class Player extends Entity{
             jump6 = ImageIO.read(getClass().getResourceAsStream("/player/jump6.png"));
             jump7 = ImageIO.read(getClass().getResourceAsStream("/player/jump7.png"));
             jump8 = ImageIO.read(getClass().getResourceAsStream("/player/jump8.png"));
-            jump9 = ImageIO.read(getClass().getResourceAsStream("/player/jump9.png"));
-            jump10 = ImageIO.read(getClass().getResourceAsStream("/player/jump10.png"));
-            jump11 = ImageIO.read(getClass().getResourceAsStream("/player/jump11.png"));
-            jump12 = ImageIO.read(getClass().getResourceAsStream("/player/jump12.png"));
-            jump13 = ImageIO.read(getClass().getResourceAsStream("/player/jump13.png"));
-            jump14 = ImageIO.read(getClass().getResourceAsStream("/player/jump14.png"));
-            jump15 = ImageIO.read(getClass().getResourceAsStream("/player/jump15.png"));
 
             attack1 = ImageIO.read(getClass().getResourceAsStream("/player/attack1.png"));
             attack2 = ImageIO.read(getClass().getResourceAsStream("/player/attack2.png"));
@@ -73,54 +66,32 @@ public class Player extends Entity{
             attack6 = ImageIO.read(getClass().getResourceAsStream("/player/attack6.png"));
             attack7 = ImageIO.read(getClass().getResourceAsStream("/player/attack7.png"));
             attack8 = ImageIO.read(getClass().getResourceAsStream("/player/attack8.png"));
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public void update () {
 
-        if(keyH.rPressed){
-            if (!isAttacking) {
-                direction = "Attack";
-                attackCounter = 0;
-                attackNum = 1;
-                isAttacking = true;
-                System.out.println("R Clicked");
-
-            }
+    public void update() {
+        if (keyH.rPressed && !isAttacking) {
+            isAttacking = true;
+            attackCounter = 0;
+            attackNum = 1;
+            direction = "Attack";
+            System.out.println("Attack started");
         }
+
         if (isAttacking) {
             attackCounter++;
             if (attackCounter > 12) {
                 attackNum++;
                 if (attackNum > 8) {
                     isAttacking = false;
-                    direction = "Idle";
+                    direction = "Idle"; // Go back to idle after attack
                 }
                 attackCounter = 0;
             }
         }
 
-        if(x <= -40 && keyH.leftPressed){
-            x=-40;
-        }
-        if(x >= 870 && keyH.rightPressed){
-            x=870;
-        }
-        if(y>= 270 && !keyH.spacePressed){
-            y=270;
-            isJumping = false;
-            jumpCounter = 0;
-
-        }
-        if(keyH.spacePressed && y == 270) {
-            direction = "jump";
-            isJumping = true;
-            new Thread(new JumpThread(this)).start();
-
-        }
         if (keyH.leftPressed) {
             direction = "run1";
             x -= speed;
@@ -128,163 +99,149 @@ public class Player extends Entity{
         if (keyH.rightPressed) {
             direction = "run1";
             x += speed;
-
         }
+
         if (keyH.shiftPressed) {
-            direction = "run1";
             speed = 4;
-        }else{
+        } else {
             speed = 2;
         }
 
-        if(!keyH.rightPressed && !keyH.leftPressed && !keyH.spacePressed){
-            direction = "Idle";
+        if (!keyH.rightPressed && !keyH.leftPressed && !keyH.spacePressed && !keyH.rPressed) {
+            direction = "Idle"; // If no keys are pressed, set idle state
+        }
+
+        if (y >= 270 && !keyH.spacePressed) {
+            y = 270;
+            isJumping = false;
+            jumpCounter = 0;
+        }
+
+        if (keyH.spacePressed && y == 270 && !isJumping) {
+            direction = "jump";
+            isJumping = true;
+            new Thread(new JumpThread(this)).start();
         }
 
         spriteCounter++;
-        if(spriteCounter >12) {
-            if (spriteNum == 1) {
-                spriteNum = 2;
-            } else if (spriteNum == 2) {
-                spriteNum = 3;
-            } else if (spriteNum == 3) {
-                spriteNum = 4;
-            } else if (spriteNum == 4) {
-                spriteNum = 5;
-            } else if (spriteNum == 5) {
-                spriteNum = 6;
-            }else if (spriteNum == 6) {
-                spriteNum = 7;
-            }else if (spriteNum == 7) {
-                spriteNum = 8;
-            }else if (spriteNum == 8) {
+        if (spriteCounter > 12) {
+            if (spriteNum == 8) {
                 spriteNum = 1;
-
+            } else {
+                spriteNum++;
             }
             spriteCounter = 0;
         }
-
-            if(keyH.rPressed){
-                attackCounter++;
-
-                if (attackCounter > 12) {
-                    for (int i = 1; i <= 8; i++) {
-                        attackNum = i;
-                        attackCounter ++;
-                        System.out.println("attackNum: " + attackNum + "attackCounter: " + attackCounter);
-                    }
-                    direction = "Idle";
-                    attackCounter = 0;
-
-                }
-            }
     }
 
-    public void draw (Graphics2D g2){
-
-//            g2.setColor(Color.WHITE);
-//            g2.fillRect(x, y, gp.tileSize, gp.tileSize);
+    public void draw(Graphics2D g2) {
         BufferedImage image = null;
-        switch(direction){
+
+        switch (direction) {
             case "run1":
-                if(spriteNum == 1){
+                if (spriteNum == 1) {
                     image = run1;
-                }
-                if(spriteNum == 2){
-                    image = run2 ;
-                }
-                if(spriteNum == 3){
+                } else if (spriteNum == 2) {
+                    image = run2;
+                } else if (spriteNum == 3) {
                     image = run3;
-                }
-                if(spriteNum == 4){
+                } else if (spriteNum == 4) {
                     image = run4;
-                }
-                if(spriteNum == 5){
+                } else if (spriteNum == 5) {
                     image = run5;
-                }
-                if(spriteNum == 6) {
+                } else if (spriteNum == 6) {
                     image = run6;
-                }
-                if(spriteNum == 7){
-                    image = run8;
-                }
-                if(spriteNum == 8){
+                } else if (spriteNum == 7) {
+                    image = run7;
+                } else if (spriteNum == 8) {
                     image = run8;
                 }
                 break;
-            case "Attack":
 
-                System.out.println("Attack frame: " + attackNum);
+            case "Attack":
                 if (attackNum == 1) {
-                    System.out.println("Attack triggered");
                     image = attack1;
-                }
-                if (attackNum == 2) {
+                } else if (attackNum == 2) {
                     image = attack2;
-                }
-                if (attackNum == 3) {
+                } else if (attackNum == 3) {
                     image = attack3;
-                }  if (attackNum == 4) {
+                } else if (attackNum == 4) {
                     image = attack4;
-                }
-                if (attackNum == 5) {
+                } else if (attackNum == 5) {
                     image = attack5;
-                }
-                if (attackNum == 6) {
+                } else if (attackNum == 6) {
                     image = attack6;
-                }
-                if (attackNum == 7) {
+                } else if (attackNum == 7) {
                     image = attack7;
-                }
-                if (attackNum == 8) {
+                } else if (attackNum == 8) {
                     image = attack8;
                 }
                 break;
 
             case "Idle":
                 image = Idle;
+                break;
 
+            case "jump":
+                if (spriteNum == 1) {
+                    image = jump1;
+                } else if (spriteNum == 2) {
+                    image = jump2;
+                } else if (spriteNum == 3) {
+                    image = jump3;
+                } else if (spriteNum == 4) {
+                    image = jump4;
+                } else if (spriteNum == 5) {
+                    image = jump5;
+                } else if (spriteNum == 6) {
+                    image = jump6;
+                } else if (spriteNum == 7) {
+                    image = jump7;
+                } else if (spriteNum == 8) {
+                    image = jump8;
+                }
+                break;
         }
+
         g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
-
-    }
-}
-class JumpThread implements Runnable {
-    private Player player;
-
-    public JumpThread(Player player) {
-        this.player = player;
     }
 
-    @Override
-    public void run() {
-        int jumpHeight = 40; // The maximum height the player will reach
-        int fallHeight = 20; // The maximum fall height after the jump
+    class JumpThread implements Runnable {
+        private Player player;
 
-
-        for (int i = 0; i < jumpHeight; i++) {
-            if (!player.isJumping) break;
-            player.y -= 4;
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        public JumpThread(Player player) {
+            this.player = player;
         }
 
+        @Override
+        public void run() {
+            int jumpHeight = 50;
+            int fallHeight = 30;
 
-        for (int i = 0; i < fallHeight; i++) {
-            if (!player.isJumping) break;
-            player.y += 4;
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            // Jump up
+            for (int i = 0; i < jumpHeight; i++) {
+                if (!player.isJumping) break;
+                player.y -= 2;
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
+
+            // Fall down
+            for (int i = 0; i < fallHeight; i++) {
+                if (!player.isJumping) break;
+                player.y += 2;
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            player.y = 270;
+            player.isJumping = false;
         }
-
-
-        player.y = 270;
-        player.isJumping = false;
     }
 }
