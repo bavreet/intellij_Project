@@ -163,35 +163,7 @@ public class Player extends Entity{
             }
             spriteCounter = 0;
         }
-//        attackCounter++;
-//        if(attackCounter >12) {
-//            if (attackNum == 1) {
-//                attackNum = 2;
-//            }
-//            if (attackNum == 2) {
-//                System.out.println("attackNum 2");
-//                attackNum = 3;
-//            }
-//            if (attackNum == 3) {
-//                System.out.println("attackNum 3");
-//                attackNum = 4;
-//            }
-//            if (attackNum == 4) {
-//                attackNum = 5;
-//            }
-//            if (attackNum == 5) {
-//                attackNum = 6;
-//            }
-//            if (attackNum == 6) {
-//                attackNum = 7;
-//            }
-//            if (attackNum == 7) {
-//                attackNum = 8;
-//            }
-//            if (attackNum == 8) {
-//                direction = "Idle";
-//            }
-//            attackCounter = 0;
+
             if(keyH.rPressed){
                 attackCounter++;
 
@@ -289,30 +261,30 @@ class JumpThread implements Runnable {
         int jumpHeight = 40; // The maximum height the player will reach
         int fallHeight = 20; // The maximum fall height after the jump
 
-        // Perform the jump action
+
         for (int i = 0; i < jumpHeight; i++) {
             if (!player.isJumping) break;
-            player.y -= 4;  // Move the player up
+            player.y -= 4;
             try {
-                Thread.sleep(10);  // Delay for jump animation
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
 
-        // Begin the fall after reaching the peak
+
         for (int i = 0; i < fallHeight; i++) {
             if (!player.isJumping) break;
-            player.y += 4;  // Move the player down
+            player.y += 4;
             try {
-                Thread.sleep(10);  // Delay for fall animation
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
 
-        // Ensure the player lands on the ground
+
         player.y = 270;
-        player.isJumping = false;  // Reset jump state
+        player.isJumping = false;
     }
 }
