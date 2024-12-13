@@ -57,12 +57,12 @@ public class gamePanel extends JPanel implements Runnable {
             public void run() {
                 increaseTimeByOne();
             }
-        }, 0, 1000);  // 0 delay, 1000ms (1 second)
+        }, 0, 1000);
     }
 
     public void startGameThread() {
-        gameThread = new Thread(this); // passing GamePanel Class to this thread's constructor
-        gameThread.start(); // automatically call the 'run' method
+        gameThread = new Thread(this);
+        gameThread.start();
     }
 
     @Override
