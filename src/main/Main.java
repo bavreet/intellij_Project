@@ -17,6 +17,8 @@ public class Main{
         gamePanel gamePanel = new gamePanel();
         window.add(gamePanel);
 
+
+
         window.pack();// Window sized to fit the prefered size and layout
 
         window.setLocationRelativeTo(null);
